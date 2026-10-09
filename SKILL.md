@@ -244,6 +244,38 @@ After running `build.sh`, open `index.html` in the browser, then do exactly thes
 
 ---
 
+## 不要做什么（反例清单）
+
+下面每一条都真实毁过课程质量。模块写完、`build.sh` 跑完，逐条自检。
+
+**不要动基础设施**
+- 不要重新生成 `styles.css` / `main.js` / `_footer.html` / `build.sh` —— 一律逐字拷贝；手写必然会丢样式或丢交互
+- 不要在模块 HTML 里内联 `<style>` 或 `<script>`
+- 不要手写 `index.html`，它只能由 `bash build.sh` 生成
+
+**不要篡改代码**
+- 不要翻译、简化、截断或「美化」代码片段 —— 学习者要拿它和真实文件逐行对照
+- 不要编造代码库里不存在的行为；不确定就回去读代码
+
+**不要偷换交互元素**
+- 不要用静态图片或纯文字代替群聊动画、数据流动画
+- 不要把测验写成「下面哪个定义正确」这类背诵题
+- 不要自创按钮文案，一律用 `references/interactive-elements.md` 顶部的固定文案对照表
+
+**不要破坏设计**
+- 不要用紫色渐变、纯白背景、冷灰色调、黑色投影
+- 不要用 `scroll-snap-type: y mandatory`（会锁死长模块，只能用 `proximity`）
+- 不要删掉字体栈里的中文字体兜底（`Noto Sans SC` / `Noto Serif SC` 等）
+
+**不要留英文**
+- 不要残留英文整句、英文按钮、英文 `aria-label`；只有代码、文件路径、URL、库名可以是英文
+
+**不要拖垮流程**
+- 不要在用户没要求时把课程撑到 7-8 个模块
+- 不要在没告知用户的情况下减少模块数或删掉强制交互元素
+
+---
+
 ## Design Identity
 
 The visual design should feel like a **beautiful developer notebook** — warm, inviting, and distinctive. Read `references/design-system.md` for the full token system, but here are the non-negotiable principles:
