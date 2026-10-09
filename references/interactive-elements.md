@@ -4,8 +4,30 @@ Implementation patterns for every interactive element type used in courses. Pick
 
 > **Architecture note:** All CSS and JavaScript for these elements live in `references/styles.css` and `references/main.js`, which are copied verbatim into every course directory. When writing module HTML files, use only the HTML patterns below — do **not** inline `<style>` or `<script>` tags for these elements. The engines in `main.js` auto-initialize on page load by scanning for the relevant class names and `data-*` attributes described here.
 
+> **⚠️ 文案一律使用简体中文。** 下面的示例里出现的英文只是结构占位，写模块时必须换成中文。代码片段本身除外——代码必须与真实代码库逐字一致，绝不翻译。
+>
+> **固定文案对照表（必须逐字使用，不要自创说法）：**
+>
+> | 位置 | 标准中文文案 |
+> |---|---|
+> | 代码块角标 | `代码` |
+> | 讲解块角标 | `中文讲解` |
+> | 测验按钮 | `对答案` / `再试一次` |
+> | 拖拽配对按钮 | `检查配对` / `重置` |
+> | 拖拽目标占位 | `拖到这里` |
+> | 聊天控制按钮 | `下一条消息` / `全部播放` / `重播` |
+> | 流程动画按钮 | `下一步` / `重新开始` |
+> | 流程动画初始提示 | `点击「下一步」开始` |
+> | 架构图提示 | `点击任意组件，看看它负责什么` |
+> | 场景标签 | `场景` |
+> | 提示框标题 | `关键洞察` / `注意` / `小技巧` |
+> | 找 Bug 提示 | `点击你认为有问题的代码行` |
+> | 术语气泡 | 中文解释，首次出现的术语写「中文（English）」 |
+>
+> 由 `main.js` 自动生成的文案（测验反馈、消息计数、步骤计数等）已经中文化，模块 HTML 里不需要重复写。
+
 ## Table of Contents
-1. [Code ↔ English Translation Blocks](#code--english-translation-blocks)
+1. [Code ↔ 中文 Translation Blocks](#code--中文-translation-blocks)
 2. [Multiple-Choice Quizzes](#multiple-choice-quizzes)
 3. [Drag-and-Drop Matching](#drag-and-drop-matching)
 4. [Group Chat Animation](#group-chat-animation)
@@ -25,15 +47,15 @@ Implementation patterns for every interactive element type used in courses. Pick
 
 ---
 
-## Code ↔ English Translation Blocks
+## Code ↔ 中文 Translation Blocks
 
-The most important teaching element. Shows real code from the project on the left and a plain English translation on the right, line by line.
+The most important teaching element. Shows real code from the project on the left and a plain Chinese explanation on the right, line by line. 左侧是项目里的真实代码（原样照抄），右侧是逐行中文讲解。
 
 **HTML:**
 ```html
 <div class="translation-block animate-in">
   <div class="translation-code">
-    <span class="translation-label">CODE</span>
+    <span class="translation-label">代码</span>
     <pre><code>
 <span class="code-line"><span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(url, {</span>
 <span class="code-line">  <span class="code-property">method</span>: <span class="code-string">'POST'</span>,</span>
@@ -42,12 +64,12 @@ The most important teaching element. Shows real code from the project on the lef
     </code></pre>
   </div>
   <div class="translation-english">
-    <span class="translation-label">PLAIN ENGLISH</span>
+    <span class="translation-label">中文讲解</span>
     <div class="translation-lines">
-      <p class="tl">Send a request to the URL and wait for a response...</p>
-      <p class="tl">We're sending data (POST), not just asking for it (GET)...</p>
-      <p class="tl">Include our API key so the server knows who we are...</p>
-      <p class="tl">End of the request setup.</p>
+      <p class="tl">向这个网址发一个请求，然后等它返回结果……</p>
+      <p class="tl">我们是在「发送」数据（POST），而不只是「读取」数据（GET）……</p>
+      <p class="tl">带上我们的 API 密钥，服务器才知道是谁在请求……</p>
+      <p class="tl">请求的准备工作到这里就结束了。</p>
     </div>
   </div>
 </div>
@@ -124,28 +146,28 @@ For testing understanding with instant feedback. Each question has options, one 
 <div class="quiz-container" id="quiz-module3">
   <div class="quiz-question-block"
        data-correct="option-b"
-       data-explanation-right="Exactly — because X is responsible for Y in this architecture."
-       data-explanation-wrong="Not quite. Think about where Y lives in the codebase...">
-    <h3 class="quiz-question">Question text here?</h3>
+       data-explanation-right="没错——因为在这套架构里，X 正是负责 Y 的那一环。"
+       data-explanation-wrong="再想想。先回忆一下 Y 在代码里到底住在哪一层……">
+    <h3 class="quiz-question">这里写问题？</h3>
     <div class="quiz-options">
       <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
         <div class="quiz-option-radio"></div>
-        <span>Answer A</span>
+        <span>选项 A</span>
       </button>
       <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
         <div class="quiz-option-radio"></div>
-        <span>Answer B (correct)</span>
+        <span>选项 B（正确答案）</span>
       </button>
       <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
         <div class="quiz-option-radio"></div>
-        <span>Answer C</span>
+        <span>选项 C</span>
       </button>
     </div>
     <div class="quiz-feedback"></div>
   </div>
 
-  <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
-  <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+  <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">对答案</button>
+  <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">再试一次</button>
 </div>
 ```
 
@@ -191,21 +213,21 @@ For matching concepts to descriptions. Supports both mouse (HTML5 Drag API) and 
 
 **HTML:**
 ```html
-<div class="dnd-container">
+<div class="dnd-container" id="dnd-module2">
   <div class="dnd-chips">
-    <div class="dnd-chip" draggable="true" data-answer="actor-a">Actor A</div>
-    <div class="dnd-chip" draggable="true" data-answer="actor-b">Actor B</div>
-    <div class="dnd-chip" draggable="true" data-answer="actor-c">Actor C</div>
+    <div class="dnd-chip" draggable="true" data-answer="actor-a">角色 A</div>
+    <div class="dnd-chip" draggable="true" data-answer="actor-b">角色 B</div>
+    <div class="dnd-chip" draggable="true" data-answer="actor-c">角色 C</div>
   </div>
   <div class="dnd-zones">
     <div class="dnd-zone" data-correct="actor-a">
-      <p class="dnd-zone-label">Description for Actor A</p>
-      <div class="dnd-zone-target">Drop here</div>
+      <p class="dnd-zone-label">角色 A 的职责描述</p>
+      <div class="dnd-zone-target">拖到这里</div>
     </div>
     <!-- more zones -->
   </div>
-  <button onclick="checkDnD()">Check Matches</button>
-  <button onclick="resetDnD()">Reset</button>
+  <button onclick="checkDnD('dnd-module2')">检查配对</button>
+  <button onclick="resetDnD('dnd-module2')">重置</button>
 </div>
 ```
 
@@ -293,8 +315,8 @@ iMessage/WeChat-style chat showing components "talking" to each other. Messages 
     <div class="chat-message" data-msg="0" data-sender="actor-a" style="display:none">
       <div class="chat-avatar" style="background: var(--color-actor-1)">A</div>
       <div class="chat-bubble">
-        <span class="chat-sender" style="color: var(--color-actor-1)">Actor A</span>
-        <p>Hey Background, I need the data for this item.</p>
+        <span class="chat-sender" style="color: var(--color-actor-1)">角色 A</span>
+        <p>喂，后台，把这条数据给我。</p>
       </div>
     </div>
     <!-- more messages... -->
@@ -310,9 +332,9 @@ iMessage/WeChat-style chat showing components "talking" to each other. Messages 
   </div>
 
   <div class="chat-controls">
-    <button class="btn chat-next-btn">Next Message</button>
-    <button class="btn chat-all-btn">Play All</button>
-    <button class="btn chat-reset-btn">Replay</button>
+    <button class="btn chat-next-btn">下一条消息</button>
+    <button class="btn chat-all-btn">全部播放</button>
+    <button class="btn chat-reset-btn">重播</button>
     <span class="chat-progress"></span>
   </div>
 </div>
@@ -337,7 +359,7 @@ iMessage/WeChat-style chat showing components "talking" to each other. Messages 
 
 ## Message Flow / Data Flow Animation
 
-Step-by-step visualization of data moving between components. User clicks "Next Step" to advance.
+Step-by-step visualization of data moving between components. User clicks 「下一步」 to advance.
 
 **Wiring:** `main.js` auto-initializes every `.flow-animation` on page load. Pass steps as JSON in `data-steps`. Each step object: `{ highlight: "flow-actor-id", label: "description", packet: true, from: "actor-id-suffix", to: "actor-id-suffix" }`. Actor element IDs must be `flow-actor-1`, `flow-actor-2`, etc. Control buttons need classes `.flow-next-btn` and `.flow-reset-btn`.
 
@@ -346,32 +368,32 @@ Step-by-step visualization of data moving between components. User clicks "Next 
 **HTML:**
 ```html
 <div class="flow-animation" data-steps='[
-  {"highlight":"flow-actor-1","label":"User clicks the button"},
-  {"highlight":"flow-actor-1","label":"Frontend sends request","packet":true,"from":"actor-1","to":"actor-2"},
-  {"highlight":"flow-actor-2","label":"Backend calls the database","packet":true,"from":"actor-2","to":"actor-3"}
+  {"highlight":"flow-actor-1","label":"用户点击按钮"},
+  {"highlight":"flow-actor-1","label":"前端把请求发出去","packet":true,"from":"actor-1","to":"actor-2"},
+  {"highlight":"flow-actor-2","label":"后端去调用数据库","packet":true,"from":"actor-2","to":"actor-3"}
 ]'>
   <div class="flow-actors">
     <div class="flow-actor" id="flow-actor-1">
       <div class="flow-actor-icon">A</div>
-      <span>Actor 1</span>
+      <span>角色 1</span>
     </div>
     <div class="flow-actor" id="flow-actor-2">
       <div class="flow-actor-icon">B</div>
-      <span>Actor 2</span>
+      <span>角色 2</span>
     </div>
     <div class="flow-actor" id="flow-actor-3">
       <div class="flow-actor-icon">C</div>
-      <span>Actor 3</span>
+      <span>角色 3</span>
     </div>
   </div>
 
   <div class="flow-packet" id="flow-packet"></div>
 
-  <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+  <div class="flow-step-label" id="flow-label">点击「下一步」开始</div>
 
   <div class="flow-controls">
-    <button class="btn flow-next-btn">Next Step</button>
-    <button class="btn flow-reset-btn">Restart</button>
+    <button class="btn flow-next-btn">下一步</button>
+    <button class="btn flow-reset-btn">重新开始</button>
     <span class="flow-progress"></span>
   </div>
 </div>
@@ -396,19 +418,19 @@ Full-system diagram where hovering/clicking a component shows a description tool
 ```html
 <div class="arch-diagram">
   <div class="arch-zone arch-zone-browser">
-    <h4 class="arch-zone-label">Browser</h4>
-    <div class="arch-component" data-desc="Injects UI into the web page, reads DOM, captures user actions"
+    <h4 class="arch-zone-label">浏览器</h4>
+    <div class="arch-component" data-desc="往网页里注入界面、读取 DOM、捕捉用户操作"
          onclick="showArchDesc(this)">
       <div class="arch-icon">📄</div>
-      <span>Component A</span>
+      <span>组件 A</span>
     </div>
     <!-- more components -->
   </div>
   <div class="arch-zone arch-zone-external">
-    <h4 class="arch-zone-label">External Services</h4>
+    <h4 class="arch-zone-label">外部服务</h4>
     <!-- API cards -->
   </div>
-  <div class="arch-description" id="arch-desc">Click any component to learn what it does</div>
+  <div class="arch-description" id="arch-desc">点击任意组件，看看它负责什么</div>
 </div>
 ```
 
@@ -437,7 +459,7 @@ Shows how different layers (e.g., HTML/CSS/JS, or data/logic/UI) build on each o
       <!-- Interactive version -->
     </div>
   </div>
-  <p class="layer-description" id="layer-desc">This is the raw HTML...</p>
+  <p class="layer-description" id="layer-desc">这是最原始的 HTML……</p>
 </div>
 ```
 
@@ -450,7 +472,7 @@ Show code with a deliberate bug. User clicks the buggy line. Reveal explains the
 **HTML:**
 ```html
 <div class="bug-challenge">
-  <h3>Find the bug in this code:</h3>
+  <h3>点击你认为有问题的代码行：</h3>
   <div class="bug-code">
     <div class="bug-line" data-line="1" onclick="checkBugLine(this, false)">
       <span class="line-num">1</span>
@@ -483,11 +505,11 @@ window.checkBugLine = function(el, isCorrect) {
   const feedback = el.closest('.bug-challenge').querySelector('.bug-feedback');
   if (isCorrect) {
     el.classList.add('correct');
-    feedback.innerHTML = '<strong>Found it!</strong> The listener uses an async operation (fetch) but doesn\'t return true. Chrome closes the message channel before the response can be sent. Fix: add <code>return true;</code> at the end.';
+    feedback.innerHTML = '<strong>找到了！</strong> 这个监听器用了异步操作（fetch），却没有 return true。Chrome 会在响应真正发出去之前就把消息通道关掉。修法：在最后加上 <code>return true;</code>。';
     feedback.className = 'bug-feedback show success';
   } else {
     el.classList.add('incorrect');
-    feedback.innerHTML = 'Not this line — look for where the async timing might cause problems...';
+    feedback.innerHTML = '不是这一行——注意哪里可能因为异步的时序出问题……';
     feedback.className = 'bug-feedback show error';
     setTimeout(() => { el.classList.remove('incorrect'); feedback.className = 'bug-feedback'; }, 2000);
   }
@@ -505,8 +527,8 @@ Same HTML/CSS/JS pattern as Multiple-Choice Quizzes, but with longer scenario de
 ```html
 <div class="scenario-block">
   <div class="scenario-context">
-    <span class="scenario-label">Scenario</span>
-    <p>Your app processes a 3-hour podcast transcript. The API has a 16,000 token limit. What do you do?</p>
+    <span class="scenario-label">场景</span>
+    <p>你的应用要处理一份 3 小时的播客转录稿，而接口有 16000 个 token 的上限。你会怎么做？</p>
   </div>
   <!-- quiz-options here -->
 </div>
@@ -522,8 +544,8 @@ Same HTML/CSS/JS pattern as Multiple-Choice Quizzes, but with longer scenario de
 <div class="callout callout-accent">
   <div class="callout-icon">💡</div>
   <div class="callout-content">
-    <strong class="callout-title">Key Insight</strong>
-    <p>This pattern — splitting responsibilities into focused roles — is one of the most important ideas in software engineering. Engineers call it "separation of concerns."</p>
+    <strong class="callout-title">关键洞察</strong>
+    <p>把职责拆成各司其职的几个角色，是软件工程里最重要的思想之一，工程师管它叫「关注点分离（separation of concerns）」。</p>
   </div>
 </div>
 ```
@@ -543,8 +565,8 @@ Grid of cards highlighting engineering patterns, tech stack components, or key c
 <div class="pattern-cards">
   <div class="pattern-card" style="border-top: 3px solid var(--color-actor-1)">
     <div class="pattern-icon" style="background: var(--color-actor-1)">🔄</div>
-    <h4 class="pattern-title">Caching</h4>
-    <p class="pattern-desc">Store results to avoid redundant work — like keeping leftovers instead of cooking a new meal every time.</p>
+    <h4 class="pattern-title">缓存（caching）</h4>
+    <p class="pattern-desc">把结果存起来，避免重复劳动——就像把剩菜留着，而不是每顿都从头做一遍。</p>
   </div>
   <!-- more cards -->
 </div>
@@ -578,12 +600,12 @@ Grid of cards highlighting engineering patterns, tech stack components, or key c
 <div class="flow-steps">
   <div class="flow-step">
     <div class="flow-step-num">1</div>
-    <p>User clicks button</p>
+    <p>用户点击按钮</p>
   </div>
   <div class="flow-arrow">→</div>
   <div class="flow-step">
     <div class="flow-step-num">2</div>
-    <p>Component A detects click</p>
+    <p>组件 A 捕捉到点击</p>
   </div>
   <div class="flow-arrow">→</div>
   <!-- more steps -->
@@ -602,11 +624,11 @@ For annotating config files, permissions, or settings:
 <div class="badge-list">
   <div class="badge-item">
     <code class="badge-code">storage</code>
-    <span class="badge-desc">Save data between sessions (like browser bookmarks)</span>
+    <span class="badge-desc">跨会话保存数据（就像浏览器的书签）</span>
   </div>
   <div class="badge-item">
     <code class="badge-code">activeTab</code>
-    <span class="badge-desc">Access the currently open tab (only when the user clicks)</span>
+    <span class="badge-desc">访问当前打开的标签页（只在用户点击时才有权限）</span>
   </div>
 </div>
 ```
@@ -635,13 +657,13 @@ For annotating config files, permissions, or settings:
 
 ## Glossary Tooltips
 
-The most important accessibility feature for non-technical learners. Any technical term in the course text should be wrapped in a tooltip that shows a plain-English definition on hover (desktop) or tap (mobile). The learner never has to leave the page or Google anything.
+The most important accessibility feature for non-technical learners. Any technical term in the course text should be wrapped in a tooltip that shows a plain-Chinese definition on hover (desktop) or tap (mobile). The learner never has to leave the page or Google anything. 术语解释用中文写，术语本身首次出现时写成「中文（English）」。
 
 **HTML — mark up terms inline:**
 ```html
-<p>The extension uses a
-  <span class="term" data-definition="A service worker is a background script that runs independently of the web page — like a behind-the-scenes assistant that's always on, even when you're not looking at the page.">service worker</span>
-  to handle API calls.
+<p>这个浏览器扩展用一个
+  <span class="term" data-definition="Service Worker（服务工作线程）是一段独立于网页运行的后台脚本——就像一位常驻的幕后助理，即使你没在看这个页面，它也一直在待命。">Service Worker</span>
+  来处理接口调用。
 </p>
 ```
 
@@ -784,11 +806,11 @@ document.addEventListener('click', () => {
 ```
 
 **Rules:**
-- Mark up EVERY technical term on first use in each module (API, DOM, callback, async, endpoint, middleware, etc.)
-- Keep definitions to 1-2 sentences max, in everyday language
-- Use a metaphor in the definition when it helps — e.g., "A **callback** is like leaving your phone number at a restaurant so they can call you when your table is ready"
-- Don't mark the same term twice within the same screen — only on first appearance per module
-- The dashed underline should be subtle enough not to distract but visible enough that curious learners discover it
+- 每个模块里，每一个技术术语第一次出现时都要加气泡（API、DOM、回调、异步、接口端点、中间件……）
+- 定义控制在 1-2 句话，用大白话，不要用另一个术语解释术语
+- 能用比喻就用比喻——例如「**回调（callback）**就像在餐厅留下手机号，位子好了他们会打给你」
+- 同一个屏幕里不要重复标注同一个术语——每个模块只在首次出现处标注
+- 下划虚线要低调但不隐形：不干扰阅读，又能让好奇的学习者发现它可以点
 
 ---
 
@@ -800,25 +822,25 @@ Use instead of paragraphs listing "this folder does X, that folder does Y." Much
 <div class="file-tree">
   <div class="ft-folder open">
     <span class="ft-name">app/</span>
-    <span class="ft-desc">Pages and API routes</span>
+    <span class="ft-desc">页面和接口路由</span>
     <div class="ft-children">
       <div class="ft-folder">
         <span class="ft-name">api/</span>
-        <span class="ft-desc">Backend endpoints the frontend calls</span>
+          <span class="ft-desc">前端会调用的后端接口</span>
       </div>
       <div class="ft-file">
         <span class="ft-name">layout.tsx</span>
-        <span class="ft-desc">The shell that wraps every page</span>
+        <span class="ft-desc">包住每个页面的外壳</span>
       </div>
     </div>
   </div>
   <div class="ft-folder">
     <span class="ft-name">components/</span>
-    <span class="ft-desc">Reusable UI building blocks</span>
+    <span class="ft-desc">可复用的界面积木</span>
   </div>
   <div class="ft-folder">
     <span class="ft-name">lib/</span>
-    <span class="ft-desc">Shared logic and utilities</span>
+    <span class="ft-desc">共享的逻辑和工具函数</span>
   </div>
 </div>
 ```
@@ -853,22 +875,22 @@ For listing components, features, or concepts visually. Replaces bullet-point pa
   <div class="icon-row">
     <div class="icon-circle" style="background: var(--color-actor-1)">🖥️</div>
     <div>
-      <strong>Frontend (Next.js)</strong>
-      <p>What the user sees and interacts with</p>
+      <strong>前端（Next.js）</strong>
+      <p>用户看到并直接操作的那一层</p>
     </div>
   </div>
   <div class="icon-row">
     <div class="icon-circle" style="background: var(--color-actor-2)">⚡</div>
     <div>
-      <strong>API Routes</strong>
-      <p>Backend logic that runs on the server</p>
+      <strong>接口路由（API Routes）</strong>
+      <p>跑在服务器上的后端逻辑</p>
     </div>
   </div>
   <div class="icon-row">
     <div class="icon-circle" style="background: var(--color-actor-3)">🗄️</div>
     <div>
-      <strong>Database (Supabase)</strong>
-      <p>Where all the data is stored permanently</p>
+      <strong>数据库（Supabase）</strong>
+      <p>所有数据长期存放的地方</p>
     </div>
   </div>
 </div>
@@ -902,22 +924,22 @@ For sequences that would otherwise be a numbered paragraph list. Visual, scannab
   <div class="step-card">
     <div class="step-num">1</div>
     <div class="step-body">
-      <strong>User pastes a YouTube URL</strong>
-      <p>The frontend captures the URL and extracts the video ID</p>
+      <strong>用户粘贴一个 YouTube 链接</strong>
+      <p>前端接住这个链接，并从中提取出视频 ID</p>
     </div>
   </div>
   <div class="step-card">
     <div class="step-num">2</div>
     <div class="step-body">
-      <strong>API fetches the transcript</strong>
-      <p>A server-side route calls an external service to get the video's text</p>
+      <strong>接口去取字幕</strong>
+      <p>一个服务端路由调用外部服务，拿到视频的文字内容</p>
     </div>
   </div>
   <div class="step-card">
     <div class="step-num">3</div>
     <div class="step-body">
-      <strong>AI analyzes the content</strong>
-      <p>The transcript is sent to an AI model that extracts key moments</p>
+      <strong>AI 分析内容</strong>
+      <p>这份文字稿被送进 AI 模型，由它挑出关键片段</p>
     </div>
   </div>
 </div>

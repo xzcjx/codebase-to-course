@@ -72,10 +72,12 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
   /* --- FONTS ---
      Display: bold, geometric, personality-driven. NOT Inter/Roboto/Arial.
      Body: readable with character. NOT system fonts.
-     Mono: developer-friendly with clear character distinction. */
-  --font-display:  'Bricolage Grotesque', Georgia, serif;
-  --font-body:     'DM Sans', -apple-system, sans-serif;
-  --font-mono:     'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+     Mono: developer-friendly with clear character distinction.
+     中文课程：拉丁字体在前、中文字体兜底在后 —— 拉丁字母走原设计，
+     汉字自动落到 Noto Serif SC / Noto Sans SC。中文字体不可删除。 */
+  --font-display:  'Bricolage Grotesque', 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+  --font-body:     'DM Sans', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', 'Sarasa Mono SC', 'Fira Code', 'Consolas', 'Menlo', monospace;
 
   /* --- TYPE SCALE (1.25 ratio) --- */
   --text-xs:   0.75rem;    /* 12px — labels, badges */
@@ -89,11 +91,12 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
   --text-5xl:  3rem;       /* 48px — hero text */
   --text-6xl:  3.75rem;    /* 60px — module numbers */
 
-  /* --- LINE HEIGHTS --- */
+  /* --- LINE HEIGHTS ---
+     中文正文需要比拉丁文更宽的行高，1.75 起步才不拥挤 */
   --leading-tight:  1.15;  /* headings */
   --leading-snug:   1.3;   /* subheadings */
-  --leading-normal: 1.6;   /* body text */
-  --leading-loose:  1.8;   /* relaxed reading */
+  --leading-normal: 1.75;  /* body text */
+  --leading-loose:  1.9;   /* relaxed reading */
 }
 ```
 
@@ -101,8 +104,15 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
 ```
+
+**Chinese typography rules:**
+- 中文标题不要用纯拉丁衬线字体渲染——标题字体栈必须保留 `Noto Serif SC`。
+- 正文行高不低于 `1.75`；中文没有词间空格，行距过窄会出现「糊成一块」的观感。
+- 不要给中文段落加 `letter-spacing`（会显得松散），只有全大写英文小标签才需要字间距。
+- 中英文混排时，中文与英文/数字之间不需要手动加空格，浏览器会处理。
+- 代码块中如果出现中文注释，行高沿用代码块设定即可，不要单独压缩。
 
 **Rules:**
 - Module numbers: `--text-6xl`, font-display, weight 800, `--color-accent` with 15% opacity

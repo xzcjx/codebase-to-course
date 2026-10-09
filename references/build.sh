@@ -1,6 +1,6 @@
 #!/bin/bash
-# Assembles the course from parts.
-# Run from the course directory: bash build.sh
+# 把各个片段拼装成完整的课程页面。
+# 在课程目录下运行：bash build.sh
 set -e
 cat _base.html modules/*.html _footer.html > index.html
-echo "Built index.html — open it in your browser."
+echo "已生成 index.html —— 请用浏览器打开。"

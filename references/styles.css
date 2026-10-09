@@ -6,7 +6,9 @@
    ============================================================= */
 
 /* ── GOOGLE FONTS (loaded via _base.html <head>) ───────────────
-   Bricolage Grotesque · DM Sans · JetBrains Mono
+   Bricolage Grotesque · DM Sans · JetBrains Mono  (拉丁字母)
+   Noto Serif SC · Noto Sans SC                    (中文兜底)
+   中文字体必须保留在字体栈里，否则中文会退化成系统默认字体。
    ──────────────────────────────────────────────────────────── */
 
 /* ── DESIGN TOKENS ─────────────────────────────────────────── */
@@ -44,10 +46,10 @@
   --color-actor-4:        #D4A843;
   --color-actor-5:        #2D8B55;
 
-  /* FONTS */
-  --font-display: 'Bricolage Grotesque', Georgia, serif;
-  --font-body:    'DM Sans', -apple-system, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  /* FONTS — 拉丁字体在前，中文字体兜底在后 */
+  --font-display: 'Bricolage Grotesque', 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+  --font-body:    'DM Sans', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Sarasa Mono SC', 'Fira Code', 'Consolas', 'Menlo', monospace;
 
   /* TYPE SCALE */
   --text-xs:   0.75rem;
@@ -64,8 +66,8 @@
   /* LINE HEIGHTS */
   --leading-tight:  1.15;
   --leading-snug:   1.3;
-  --leading-normal: 1.6;
-  --leading-loose:  1.8;
+  --leading-normal: 1.75;   /* 中文正文需要比拉丁文更宽的行高 */
+  --leading-loose:  1.9;
 
   /* SPACING */
   --space-1:  0.25rem;

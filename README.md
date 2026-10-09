@@ -22,6 +22,7 @@ You're not trying to become a software engineer. You want coding as a superpower
 
 The output is a **single HTML file** — no dependencies, no setup, works offline. It includes:
 
+- **简体中文输出（默认）** — 课程正文、界面按钮、测验、术语气泡全部中文；代码片段保持原样，右侧配逐行中文讲解。中文字体（Noto Sans SC / Noto Serif SC）已内置兜底。
 - **Scroll-based modules** with progress tracking and keyboard navigation
 - **Code ↔ Plain English translations** — real code on the left, what it means on the right
 <img width="720" alt="Code translation block" src="https://github.com/user-attachments/assets/fb9e7fac-05c1-4f98-b80c-46543ef81afc" />

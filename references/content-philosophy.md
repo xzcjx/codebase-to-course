@@ -2,6 +2,8 @@
 
 > **When to read this:** During Phase 2.5 (writing module briefs) and Phase 3 (writing module HTML). These principles guide every content decision — what to show, how to explain it, and how to test understanding.
 
+> **语言：全部写简体中文。** 下面的示例文案只是说明语气和结构，实际课程里的每一句话都要用中文写。唯一的例外是代码片段本身——必须与真实代码库逐字一致，绝不翻译。术语首次出现写成「中文（English）」。
+
 These principles are what separate a great course from a generic tutorial. They should guide every content decision:
 
 ### Show, Don't Tell — Aggressively Visual
@@ -17,7 +19,7 @@ People's eyes glaze over text blocks. The course should feel closer to an infogr
 - A sequence of steps → **flow diagram with arrows** or **numbered step cards**
 - "Component A talks to Component B" → **animated data flow** or **group chat visualization**
 - "This file does X, that file does Y" → **visual file tree with annotations** or **icon + one-liner badges**
-- Explaining what code does → **code↔English translation block** (not a paragraph *about* the code)
+- Explaining what code does → **code↔中文 translation block（代码 ↔ 中文讲解）** (not a paragraph *about* the code)
 - Comparing two approaches → **side-by-side columns** with visual contrast
 
 **Visual breathing room:**
@@ -25,8 +27,10 @@ People's eyes glaze over text blocks. The course should feel closer to an infogr
 - Alternate between full-width visuals and narrow text blocks to create rhythm
 - Every module should have at least one "hero visual" — a diagram, animation, or interactive element that dominates the screen and teaches the core concept at a glance
 
-### Code ↔ English Translations
-Every code snippet gets a side-by-side plain English translation. Left panel: real code from the project with syntax highlighting. Right panel: line-by-line plain English explaining what each line does. This is the single most valuable teaching tool for non-technical learners.
+### Code ↔ 中文讲解（Code ↔ Chinese Translations）
+Every code snippet gets a side-by-side plain-Chinese explanation. Left panel: real code from the project with syntax highlighting (原样照抄，不要改动). Right panel: line-by-line 中文讲解, explaining what each line does. This is the single most valuable teaching tool for non-technical learners.
+
+**讲解怎么写：** 逐行对应左侧代码，用「人话」说明这行在干什么、为什么要这么写。不要逐字翻译语法，要说清意图——例如「这里在等服务器返回结果，等的时候先别往下走」。代码里的标识符（函数名、变量名）保持英文原样出现在讲解里，方便学习者对照。
 
 **Critical: No horizontal scrollbars on code.** All code must use `white-space: pre-wrap` so it wraps instead of scrolling. This is a course for non-technical people, not an IDE — readability beats preserving indentation structure.
 
@@ -47,7 +51,7 @@ Follow what actually happens when the learner does something they already do eve
 Use "aha!" callout boxes for universal CS insights. Use humor where natural (not forced). Give components personality — they're "characters" in a story, not abstract boxes on a diagram.
 
 ### Glossary Tooltips — No Term Left Behind
-Every technical term (API, DOM, callback, middleware, etc.) gets a dashed-underline tooltip on first use in each module. Hover on desktop or tap on mobile to see a 1-2 sentence plain-English definition. The learner should never have to leave the page to Google a term. This is the difference between a course that *says* it's for non-technical people and one that actually *is*.
+Every technical term (API, DOM, callback, middleware, etc.) gets a dashed-underline tooltip on first use in each module. Hover on desktop or tap on mobile to see a 1-2 sentence plain-Chinese definition. The learner should never have to leave the page to Google a term. This is the difference between a course that *says* it's for non-technical people and one that actually *is*.
 
 **Be extremely aggressive with tooltips.** If there is even a 1% chance a non-technical person doesn't know a word, tooltip it. This includes:
 - Software names they might not know (Blender, GIMP, Audacity, etc.)
@@ -79,8 +83,8 @@ The goal of learning is practical application — being able to *do something* w
 - Anything that can be answered by scrolling up and copying — that tests scrolling, not understanding
 
 **Quiz tone:**
-- Wrong answers get encouraging, non-judgmental explanations ("Not quite — here's why...")
-- Correct answers get brief reinforcement of the underlying principle ("Exactly! This works because...")
+- Wrong answers get encouraging, non-judgmental explanations（答错时说「再想想～ 之所以不是这样，是因为……」）
+- Correct answers get brief reinforcement of the underlying principle（答对时说「完全正确！它成立的原因是……」）
 - Never punitive, never score-focused. No "You got 3/5!" — the quiz is a thinking exercise, not an exam
 - Wrong answer explanations should teach something new, not just say "wrong, the answer was B"
 

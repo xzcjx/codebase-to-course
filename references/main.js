@@ -3,6 +3,9 @@
  * Copy this file verbatim into the course output directory.
  * Never regenerate it. It handles all interactivity generically.
  *
+ * 界面固定文案已默认中文化（测验反馈、操作按钮提示、进度文案等）。
+ * 如果课程需要其它语言，只需替换下面这些字符串，不要改动引擎逻辑。
+ *
  * Engines included:
  *  - Navigation & progress bar
  *  - Scroll-triggered reveal animations
@@ -182,7 +185,7 @@
       const wrongExp  = q.dataset.explanationWrong  || '';
 
       if (!selected) {
-        feedback.textContent = 'Pick an answer first!';
+        feedback.textContent = '先选择一个答案吧！';
         feedback.className = 'quiz-feedback show warning';
         return;
       }
@@ -190,13 +193,13 @@
 
       if (selected.dataset.value === correct) {
         selected.classList.add('correct');
-        feedback.innerHTML = '<strong>Exactly!</strong> ' + rightExp;
+        feedback.innerHTML = '<strong>完全正确！</strong> ' + rightExp;
         feedback.className = 'quiz-feedback show success';
       } else {
         selected.classList.add('incorrect');
         const correctBtn = $(`.quiz-option[data-value="${correct}"]`, q);
         if (correctBtn) correctBtn.classList.add('correct');
-        feedback.innerHTML = '<strong>Not quite.</strong> ' + wrongExp;
+        feedback.innerHTML = '<strong>再想想～</strong> ' + wrongExp;
         feedback.className = 'quiz-feedback show error';
       }
     });
@@ -303,7 +306,7 @@
     const container = $('#' + containerId);
     if (!container) return;
     $$('.dnd-zone-target', container).forEach(t => {
-      t.textContent = 'Drop here';
+      t.textContent = '拖到这里';
       delete t.dataset.placed;
       t.classList.remove('correct-placed', 'incorrect-placed');
     });
@@ -333,7 +336,7 @@
     });
 
     function updateProgress() {
-      if (progressEl) progressEl.textContent = index + ' / ' + messages.length + ' messages';
+      if (progressEl) progressEl.textContent = '已显示 ' + index + ' / ' + messages.length + ' 条消息';
     }
 
     function showNext() {
@@ -395,7 +398,7 @@
     let step = 0;
 
     function updateProgress() {
-      if (progressEl) progressEl.textContent = 'Step ' + step + ' / ' + stepsData.length;
+      if (progressEl) progressEl.textContent = '第 ' + step + ' / ' + stepsData.length + ' 步';
     }
 
     function animatePacket(fromId, toId) {
@@ -438,7 +441,7 @@
     function reset() {
       step = 0;
       $$('.flow-actor', containerEl).forEach(a => a.classList.remove('active'));
-      if (labelEl) labelEl.textContent = 'Click "Next Step" to begin';
+      if (labelEl) labelEl.textContent = '点击「下一步」开始';
       if (packet)  packet.style.display = 'none';
       updateProgress();
     }
@@ -470,12 +473,12 @@
     const feedback  = $('.bug-feedback', challenge);
     if (isCorrect) {
       el.classList.add('correct');
-      feedback.innerHTML  = '<strong>Found it!</strong> ' + (el.dataset.explanation || '');
+      feedback.innerHTML  = '<strong>找到了！</strong> ' + (el.dataset.explanation || '');
       feedback.className  = 'bug-feedback show success';
       $$('.bug-line', challenge).forEach(l => l.style.pointerEvents = 'none');
     } else {
       el.classList.add('incorrect');
-      feedback.innerHTML  = (el.dataset.hint || 'Not this line — keep looking...');
+      feedback.innerHTML  = (el.dataset.hint || '不是这一行，继续找找看…');
       feedback.className  = 'bug-feedback show error';
       setTimeout(() => {
         el.classList.remove('incorrect');

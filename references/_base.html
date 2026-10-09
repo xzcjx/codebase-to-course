@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>COURSE_TITLE</title>
 
-  <!-- Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono -->
+  <!--
+    Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono（拉丁字母）
+                + Noto Serif SC · Noto Sans SC（中文兜底，勿删）
+    中文会优先命中 Noto 系字体，拉丁字母 / 代码仍然使用原本的字体。
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 
@@ -40,10 +44,10 @@
       <span class="nav-title">COURSE_TITLE</span>
       <div class="nav-dots" id="nav-dots" role="tablist">
         <!--
-          One <button> per module. Replace MODULE_N_NAME with the actual module title.
+          每个模块一个 <button>。把 MODULE_N_NAME 替换成真正的模块标题（中文）。
 
-          <button class="nav-dot" data-target="module-1" data-tooltip="MODULE_1_NAME" role="tab" aria-label="Module 1: MODULE_1_NAME"></button>
-          <button class="nav-dot" data-target="module-2" data-tooltip="MODULE_2_NAME" role="tab" aria-label="Module 2: MODULE_2_NAME"></button>
+          <button class="nav-dot" data-target="module-1" data-tooltip="MODULE_1_NAME" role="tab" aria-label="模块 1：MODULE_1_NAME"></button>
+          <button class="nav-dot" data-target="module-2" data-tooltip="MODULE_2_NAME" role="tab" aria-label="模块 2：MODULE_2_NAME"></button>
           ...
         -->
         NAV_DOTS

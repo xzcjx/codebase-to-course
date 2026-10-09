@@ -2,6 +2,8 @@
 
 > **When to read this:** During Phase 2.5 (planning checkpoint) for complex codebases. Fill in one brief per module, save to `course-name/briefs/0N-slug.md`. Each brief gives a parallel agent everything it needs to write one module without reading the codebase or SKILL.md.
 
+> **语言：brief 里写清楚本模块用中文撰写。** 交给写作 agent 的每个 brief 都要显式注明「所有讲解、标题、按钮、测验、气泡文案一律简体中文；代码片段保持原样不翻译」。示例文案用中文写，避免 agent 照抄英文。
+
 ---
 
 ## Module N: [Title]
@@ -14,7 +16,7 @@
 
 ### Code Snippets (pre-extracted)
 
-Include the actual code the module will use in code↔English translation blocks. Copy-paste from the codebase with file path and line numbers. The writing agent will use these verbatim — it will NOT re-read the codebase.
+Include the actual code the module will use in code↔中文 translation blocks（代码 ↔ 中文讲解）. Copy-paste from the codebase with file path and line numbers. The writing agent will use these verbatim — it will NOT re-read the codebase. 代码保持原样；同时用中文写好每行的讲解要点，供写作 agent 直接采用。
 
 File: src/example/file.ts (lines 12-24)
 [paste actual code here]
@@ -26,7 +28,7 @@ File: src/another/file.ts (lines 45-52)
 
 Check which elements this module needs. Include enough detail for the writing agent to build them.
 
-- [ ] **Code↔English translation** — which snippet(s) from above
+- [ ] **Code↔中文 translation（代码 ↔ 中文讲解）** — which snippet(s) from above
 - [ ] **Quiz** — [number] questions, style: [scenario / debugging / architecture / tracing]. Brief description of each question's angle.
 - [ ] **Group chat animation** — actors: [list]. Message flow summary: [who says what to whom, in what order]
 - [ ] **Data flow animation** — actors: [list]. Steps: [sequence of highlights and packet movements]
