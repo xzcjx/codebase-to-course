@@ -211,6 +211,25 @@ After running `build.sh`, open `index.html` in the browser. Walk the user throug
 
 ---
 
+## 失败模式与兜底
+
+执行途中遇到下面任一情况，**先走「一线修复」；仍失败再走「兜底」**，并在最终汇报里说明降级了什么、影响哪些模块。
+
+| 触发条件 | 一线修复 | 仍失败兜底 |
+|---|---|---|
+| 找不到入口文件，或项目没有 README | 用 `package.json` / `pyproject.toml` / `Cargo.toml` / `Makefile` / `init.py` 定位入口 | 直接问用户一句「这个项目平时怎么跑起来？」，拿到答案再继续 |
+| 代码库超过 200 个文件 | 只读入口文件 + 两层目录树，跳过 `vendor/`、`node_modules/`、构建产物 | 让用户指定 2-3 个重点目录，其余只做目录级概述 |
+| 用户只给 GitHub 链接，且仓库私有 | 提示改用本地路径，或设置 `GITHUB_TOKEN` 后重试 clone | 请用户本地 clone 后把路径给你，跳过远程步骤 |
+| 子 agent 不可用或超时 | 放弃 Parallel 路径，改走 Sequential 逐模块写 | 模块数压到 4 个，先保住每模块的强制元素，砍掉可选元素 |
+| `bash build.sh` 报错 | 检查 `modules/*.html` 是否只含 `<section>`，文件名是否按 01/02 排序 | 手动拼接：`cat _base.html modules/*.html _footer.html > index.html` |
+| 打开 `index.html` 样式全丢或整页空白 | 检查 `_base.html` 里 `styles.css`、`main.js` 的相对路径与真实文件名是否一致 | 把 CSS/JS 内联进 `index.html`，作为单文件兜底 |
+| 群聊动画 / 数据流动画不动 | 检查 `.chat-window` 是否有唯一 `id`，`.flow-animation` 的 `data-steps` JSON 是否用单引号定界 | 换成静态 `.flow-steps` + 文字说明，保证没有 JS 也能读懂 |
+| 某个模块写到一半被截断 | 拆成 2-3 次写入，或先写 4 个核心模块再补其它 | 降级为 4 模块 × 3 屏，优先保住代码讲解与测验 |
+| 页面上残留英文界面文案 | 对照 `references/interactive-elements.md` 顶部的固定文案对照表逐条替换 | 扫一遍 `index.html`，凡是面向学习者的英文整句一律替换 |
+| 用户中途要求换语言 | 按用户语言重写正文，并同步替换 `main.js` 里的固定文案 | 至少保证按钮、测验反馈与正文语言一致，不留混排 |
+
+---
+
 ## Design Identity
 
 The visual design should feel like a **beautiful developer notebook** — warm, inviting, and distinctive. Read `references/design-system.md` for the full token system, but here are the non-negotiable principles:
