@@ -81,6 +81,8 @@ Before writing course HTML, deeply understand the codebase. Read all the key fil
 
 **Figure out what the app does yourself** by reading the README, the main entry points, and the UI code. Don't ask the user to explain the product — they may not be familiar with it either. The course should open by explaining what the app does in plain language (a brief "here's what this thing does and why it's interesting") before diving into how it works. The first module should start with a concrete user action — "imagine you paste a YouTube URL and click Analyze — here's what happens under the hood."
 
+**产出规格：** 分析结论不落盘，直接进入 Phase 2。若判定要走 Parallel 路径，必须把要用到的代码片段**连同文件路径与行号**抄进 `course-name/briefs/`（写作 agent 不会再读代码库）。
+
 ### Phase 2: Curriculum Design
 
 Structure the course as **4-6 modules**. Most courses need 4-6. Only go to 7-8 if the codebase genuinely has that many distinct concepts worth teaching. Fewer, better modules beat more, thinner ones.
@@ -97,7 +99,11 @@ The arc always starts from what the learner already knows (the user-facing behav
 | 6 | When things break | Build debugging intuition so you can escape AI bug loops |
 | 7 | The big picture | See the full architecture so you can make better decisions about what to build next |
 
-This is a **menu, not a checklist**. Pick the modules that serve the codebase — a simple CLI tool needs 4, not 7. Adapt the arc to the codebase's complexity.
+这是**菜单，不是清单**。按代码库规模取用，不要一律按 7 个写：
+
+- **4 个模块**：单入口 CLI、库、脚本、单页小工具
+- **5-6 个模块**：有前端 + 后端的应用，或涉及外部服务 / 数据库
+- **7-8 个模块**：仅当存在 7 个以上彼此独立、各自值得单独讲的机制；否则把相邻模块合并
 
 **The key principle:** Every module should connect back to a practical skill — steering AI, debugging, making decisions. If a module doesn't help the learner DO something better, cut it or reframe it until it does.
 
@@ -165,10 +171,10 @@ course-name/
 - `references/_footer.html` → `course-name/_footer.html`
 - `references/build.sh` → `course-name/build.sh`
 
-**Step 2 (both paths): Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three substitutions:
+**Step 2 (both paths): Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three kinds of substitution:
 - Both instances of `COURSE_TITLE` → the actual course title
 - The four `ACCENT_*` placeholders → the chosen accent color values (pick one palette from the comments in `_base.html`)
-- `NAV_DOTS` → one `<button class="nav-dot" ...>` per module
+- `NAV_DOTS` → one `<button class="nav-dot" ...>` per module（按钮数量必须等于模块数，`data-target` 依次为 `module-1`、`module-2`…，与 `.module` 的 `id` 一一对应）
 
 **Step 3: Write modules** — This is where the paths diverge.
 
@@ -207,7 +213,81 @@ This produces `index.html`. Open it in the browser.
 
 ### Phase 4: Review and Open
 
-After running `build.sh`, open `index.html` in the browser. Walk the user through what was built and ask for feedback on content, design, and interactivity.
+🔴 CHECKPOINT — After running `build.sh`, open `index.html` in the browser, then do exactly these two things:
+
+1. 用一句话交代结构：几个模块、每个模块讲什么、`index.html` 在哪个目录。
+2. 依次问下面三个固定问题，并等用户回答：
+   - 哪一屏的讲解你没看懂？（内容）
+   - 配色、字体、间距哪里不舒服？（设计）
+   - 哪个交互元素点了没反应，或者玩法不直观？（交互）
+
+拿到反馈后，改对应的 `modules/*.html` 或 `_base.html`，重新跑 `bash build.sh`。
+
+---
+
+## 失败模式与兜底
+
+执行途中遇到下面任一情况，**先走「一线修复」；仍失败再走「兜底」**，并在最终汇报里说明降级了什么、影响哪些模块。**任何降级动作都要先过下面的 🔴 CHECKPOINT**，不允许静默降级。
+
+| 触发条件 | 一线修复 | 仍失败兜底 |
+|---|---|---|
+| 找不到入口文件，或项目没有 README | 用 `package.json` / `pyproject.toml` / `Cargo.toml` / `Makefile` / `init.py` 定位入口 | 直接问用户一句「这个项目平时怎么跑起来？」，拿到答案再继续 |
+| 代码库超过 200 个文件 | 只读入口文件 + 两层目录树，跳过 `vendor/`、`node_modules/`、构建产物 | 让用户指定 2-3 个重点目录，其余只做目录级概述 |
+| 用户只给 GitHub 链接，且仓库私有 | 提示改用本地路径，或设置 `GITHUB_TOKEN` 后重试 clone | 请用户本地 clone 后把路径给你，跳过远程步骤 |
+| 子 agent 不可用或超时 | 放弃 Parallel 路径，改走 Sequential 逐模块写 | 模块数压到 4 个，先保住每模块的强制元素，砍掉可选元素 |
+| `bash build.sh` 报错 | 检查 `modules/*.html` 是否只含 `<section>`，文件名是否按 01/02 排序 | 手动拼接：`cat _base.html modules/*.html _footer.html > index.html` |
+| 打开 `index.html` 样式全丢或整页空白 | 检查 `_base.html` 里 `styles.css`、`main.js` 的相对路径与真实文件名是否一致 | 把 CSS/JS 内联进 `index.html`，作为单文件兜底 |
+| 群聊动画 / 数据流动画不动 | 检查 `.chat-window` 是否有唯一 `id`，`.flow-animation` 的 `data-steps` JSON 是否用单引号定界 | 换成静态 `.flow-steps` + 文字说明，保证没有 JS 也能读懂 |
+| 某个模块写到一半被截断 | 拆成 2-3 次写入，或先写 4 个核心模块再补其它 | 降级为 4 模块 × 3 屏，优先保住代码讲解与测验 |
+| 页面上残留英文界面文案 | 对照 `references/interactive-elements.md` 顶部的固定文案对照表逐条替换 | 扫一遍 `index.html`，凡是面向学习者的英文整句一律替换 |
+| 用户中途要求换语言 | 按用户语言重写正文，并同步替换 `main.js` 里的固定文案 | 至少保证按钮、测验反馈与正文语言一致，不留混排 |
+
+---
+
+## 检查点（🔴 CHECKPOINT / 🛑 STOP）
+
+下面这些位置**必须停下来等用户回答**。标记要写成 `🔴 CHECKPOINT` / `🛑 STOP` 字面量，并用一句话说清「要确认什么、不确认会怎样」——只写「建议先问一下用户」不算数，LLM 解析时扫的是视觉标记。
+
+| 标记 | 触发时机 | 停下来做什么 |
+|---|---|---|
+| 🛑 STOP | 课程输出目录已存在且非空 | 问用户「覆盖 / 换个目录名」，**默认绝不覆盖**；等回答再写文件 |
+| 🛑 STOP | 准备写进 HTML 的代码片段里出现真实密钥、token、账号密码、内网地址 | 停下告知用户，先脱敏或换一段片段；**不得把敏感串原样写进课程** |
+| 🛑 STOP | 代码库看起来是私有 / 未公开项目 | 问一句「这个项目可以做成课程吗」，确认后再继续读代码 |
+| 🔴 CHECKPOINT | 打算做任何降级：减模块、砍强制元素、动画退化成静态图、跳过 `build.sh` | 说明降级内容与影响范围，得到确认再改 |
+| 🔴 CHECKPOINT | Phase 1 结束后仍不清楚项目怎么跑起来 / 入口在哪 | 用一句话问用户，拿到答案再进 Phase 2 |
+| 🔴 CHECKPOINT | Phase 4 收尾（见下方固定三问） | 等用户逐条回答后，再改 `modules/*.html` 并重新 `bash build.sh` |
+
+---
+
+## 不要做什么（反例清单）
+
+下面每一条都真实毁过课程质量。模块写完、`build.sh` 跑完，逐条自检。
+
+**不要动基础设施**
+- 不要重新生成 `styles.css` / `main.js` / `_footer.html` / `build.sh` —— 一律逐字拷贝；手写必然会丢样式或丢交互
+- 不要在模块 HTML 里内联 `<style>` 或 `<script>`
+- 不要手写 `index.html`，它只能由 `bash build.sh` 生成
+
+**不要篡改代码**
+- 不要翻译、简化、截断或「美化」代码片段 —— 学习者要拿它和真实文件逐行对照
+- 不要编造代码库里不存在的行为；不确定就回去读代码
+
+**不要偷换交互元素**
+- 不要用静态图片或纯文字代替群聊动画、数据流动画
+- 不要把测验写成「下面哪个定义正确」这类背诵题
+- 不要自创按钮文案，一律用 `references/interactive-elements.md` 顶部的固定文案对照表
+
+**不要破坏设计**
+- 不要用紫色渐变、纯白背景、冷灰色调、黑色投影
+- 不要用 `scroll-snap-type: y mandatory`（会锁死长模块，只能用 `proximity`）
+- 不要删掉字体栈里的中文字体兜底（`Noto Sans SC` / `Noto Serif SC` 等）
+
+**不要留英文**
+- 不要残留英文整句、英文按钮、英文 `aria-label`；只有代码、文件路径、URL、库名可以是英文
+
+**不要拖垮流程**
+- 不要在用户没要求时把课程撑到 7-8 个模块
+- 不要在没告知用户的情况下减少模块数或删掉强制交互元素
 
 ---
 
@@ -217,7 +297,7 @@ The visual design should feel like a **beautiful developer notebook** — warm, 
 
 - **Warm palette**: Off-white backgrounds (like aged paper), warm grays, NO cold whites or blues
 - **Bold accent**: One confident accent color (vermillion, coral, teal — NOT purple gradients)
-- **Distinctive typography**: Display font with personality for headings (Bricolage Grotesque, or similar bold geometric face — NEVER Inter, Roboto, Arial, or Space Grotesk). Clean sans-serif for body (DM Sans or similar). JetBrains Mono for code.
+- **Distinctive typography**: 标题字体固定用 `Bricolage Grotesque`、正文 `DM Sans`、代码 `JetBrains Mono` —— 直接照抄 `references/design-system.md` 里的 `--font-display` / `--font-body` / `--font-mono`（已含中文兜底，不要替换、不要精简）。禁止 Inter、Roboto、Arial、Space Grotesk。
 - **Generous whitespace**: Modules breathe. Max 3-4 short paragraphs per screen.
 - **Alternating backgrounds**: Even/odd modules alternate between two warm background tones for visual rhythm
 - **Dark code blocks**: IDE-style with Catppuccin-inspired syntax highlighting on deep indigo-charcoal (#1E1E2E)
