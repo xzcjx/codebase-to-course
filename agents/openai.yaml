@@ -1,0 +1,11 @@
+interface:
+  display_name: "Codebase to Course"
+  short_description: "把任意代码库变成交互式中文课程（单页 HTML）"
+  default_prompt: "把这个项目变成一门课"
+  brand_color: "#D94F30"
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools: []

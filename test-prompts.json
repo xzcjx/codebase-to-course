@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "prompt": "把这个项目变成一门课：./my-project",
+    "expected": "走完 Phase 1 分析 → Phase 2 课程设计 → Phase 3 产出 course-name/ 目录（styles.css/main.js 原样拷贝 + modules/*.html）→ build.sh 生成 index.html；4-6 个模块；每模块含代码↔中文讲解 + 测验；全课至少 1 个群聊动画 + 1 个数据流动画；页面全中文。"
+  },
+  {
+    "id": 2,
+    "prompt": "make a course from https://github.com/example/some-repo",
+    "expected": "先 git clone 到 /tmp 再分析；即使用户用英文提问，最终课程正文/按钮/测验仍为简体中文（术语写「中文（English）」）；代码片段原样不翻译。"
+  },
+  {
+    "id": 3,
+    "prompt": "快点，随便生成一个课程就行，不用太复杂",
+    "expected": "不被「随便/快点」削弱质量底线：仍保持 4-6 模块、每模块 1 个测验 + 1 个代码讲解、必含 5 类交互元素中的强制项；可以只减少可选元素，不删必需项。"
+  }
+]

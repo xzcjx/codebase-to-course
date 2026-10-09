@@ -41,31 +41,44 @@ The output is a **single HTML file** — no dependencies, no setup, works offlin
 
 ## How to install
 
-适用于任何 skills-compatible runtime（Codex / Claude Code / Cursor / OpenClaw / Hermes 等）。
+适用于任何 skills-compatible runtime（Codex / Claude Code / Cursor / OpenClaw / Hermes 等）。装完之后它既是**技能**（自动触发），也是**命令**（手动调用）。
 
-**方式 1：一行命令（自动检测 runtime）**
-
-```bash
-npx skills add xzcjx/codebase-to-course
-```
-
-**方式 2：手动拷贝到你的 runtime 的 skills 目录**
-
-| Runtime | 目标路径 |
-|---|---|
-| Codex | `~/.codex/skills/codebase-to-course/` |
-| Claude Code | `~/.claude/skills/codebase-to-course/` |
-| Cursor | `~/.cursor/skills/codebase-to-course/` |
-| 其它 | 该 runtime 文档里的 skills 目录 |
+**方式 1：一键安装脚本（推荐）**
 
 ```bash
 git clone https://github.com/xzcjx/codebase-to-course.git
-cp -r codebase-to-course ~/.codex/skills/     # 换成你自己 runtime 的路径
+cd codebase-to-course
+bash install.sh --link     # 软链安装，改仓库文件立即生效；用 bash install.sh 则为拷贝安装
+```
+
+脚本会依次写入下面这些位置（已存在的会跳过）：
+
+| Runtime | 目标路径 | 调用方式 |
+|---|---|---|
+| Codex | `~/.agents/skills/codebase-to-course/`（兼容 `~/.codex/skills/`） | `$codebase-to-course` |
+| Claude Code | `~/.claude/skills/codebase-to-course/` | `/codebase-to-course` |
+| Cursor | `~/.cursor/skills/codebase-to-course/` | `@codebase-to-course` |
+
+**方式 2：手动装到某一个 runtime**
+
+```bash
+mkdir -p ~/.claude/skills            # 换成你所用 runtime 的 skills 目录
+cp -r codebase-to-course ~/.claude/skills/
 ```
 
 **方式 3：不安装，当参考资料用**
 
 直接把 `SKILL.md` 的内容 `cat` 进对话上下文，agent 同样能按它执行。
+
+### 作为命令调用
+
+```text
+Codex        $codebase-to-course 把这个项目变成一门课
+Claude Code  /codebase-to-course 把这个项目变成一门课
+```
+
+不带参数时，技能默认拿**当前工作目录**当输入；也可以把项目路径或 GitHub 链接跟在后面。
+Codex 会自动检测新增技能，没出现就重启 Codex。
 
 ## How to use
 
