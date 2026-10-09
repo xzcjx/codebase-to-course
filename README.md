@@ -1,6 +1,6 @@
 # Codebase to Course
 
-A Claude Code skill that turns any codebase into a beautiful, interactive single-page HTML course.
+An Agent Skill that turns any codebase into a beautiful, interactive single-page HTML course.
 
 Point it at a repo. Get back a stunning, self-contained course that teaches how the code works — with scroll-based navigation, animated visualizations, embedded quizzes, and code-with-plain-English side-by-side translations.
 
@@ -39,13 +39,38 @@ The output is a **single HTML file** — no dependencies, no setup, works offlin
   
 - **Warm, distinctive design** — not the typical purple-gradient AI look
 
+## How to install
+
+适用于任何 skills-compatible runtime（Codex / Claude Code / Cursor / OpenClaw / Hermes 等）。
+
+**方式 1：一行命令（自动检测 runtime）**
+
+```bash
+npx skills add xzcjx/codebase-to-course
+```
+
+**方式 2：手动拷贝到你的 runtime 的 skills 目录**
+
+| Runtime | 目标路径 |
+|---|---|
+| Codex | `~/.codex/skills/codebase-to-course/` |
+| Claude Code | `~/.claude/skills/codebase-to-course/` |
+| Cursor | `~/.cursor/skills/codebase-to-course/` |
+| 其它 | 该 runtime 文档里的 skills 目录 |
+
+```bash
+git clone https://github.com/xzcjx/codebase-to-course.git
+cp -r codebase-to-course ~/.codex/skills/     # 换成你自己 runtime 的路径
+```
+
+**方式 3：不安装，当参考资料用**
+
+直接把 `SKILL.md` 的内容 `cat` 进对话上下文，agent 同样能按它执行。
+
 ## How to use
 
-### As a Claude Code skill
-
-1. Copy the `codebase-to-course` folder into `~/.claude/skills/`
-2. Open any project in Claude Code
-3. Say: *"Turn this codebase into an interactive course"*
+装好后，在你使用的 agent 里打开任意项目，然后说：
+*"Turn this codebase into an interactive course"* 或 *"把这个项目变成一门课"*。
 
 ### Trigger phrases
 
@@ -90,4 +115,6 @@ codebase-to-course/
 
 ---
 
-Built by [Zara](https://x.com/zarazhangrui) with Claude Code.
+## Credits
+
+Original author: [Zara](https://x.com/zarazhangrui)（原版首发于 Claude Code 生态；本仓库为多 runtime 通用版本，并默认输出简体中文）。
