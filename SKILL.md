@@ -213,7 +213,7 @@ This produces `index.html`. Open it in the browser.
 
 ### Phase 4: Review and Open
 
-After running `build.sh`, open `index.html` in the browser, then do exactly these two things:
+🔴 CHECKPOINT — After running `build.sh`, open `index.html` in the browser, then do exactly these two things:
 
 1. 用一句话交代结构：几个模块、每个模块讲什么、`index.html` 在哪个目录。
 2. 依次问下面三个固定问题，并等用户回答：
@@ -227,7 +227,7 @@ After running `build.sh`, open `index.html` in the browser, then do exactly thes
 
 ## 失败模式与兜底
 
-执行途中遇到下面任一情况，**先走「一线修复」；仍失败再走「兜底」**，并在最终汇报里说明降级了什么、影响哪些模块。
+执行途中遇到下面任一情况，**先走「一线修复」；仍失败再走「兜底」**，并在最终汇报里说明降级了什么、影响哪些模块。**任何降级动作都要先过下面的 🔴 CHECKPOINT**，不允许静默降级。
 
 | 触发条件 | 一线修复 | 仍失败兜底 |
 |---|---|---|
@@ -241,6 +241,21 @@ After running `build.sh`, open `index.html` in the browser, then do exactly thes
 | 某个模块写到一半被截断 | 拆成 2-3 次写入，或先写 4 个核心模块再补其它 | 降级为 4 模块 × 3 屏，优先保住代码讲解与测验 |
 | 页面上残留英文界面文案 | 对照 `references/interactive-elements.md` 顶部的固定文案对照表逐条替换 | 扫一遍 `index.html`，凡是面向学习者的英文整句一律替换 |
 | 用户中途要求换语言 | 按用户语言重写正文，并同步替换 `main.js` 里的固定文案 | 至少保证按钮、测验反馈与正文语言一致，不留混排 |
+
+---
+
+## 检查点（🔴 CHECKPOINT / 🛑 STOP）
+
+下面这些位置**必须停下来等用户回答**。标记要写成 `🔴 CHECKPOINT` / `🛑 STOP` 字面量，并用一句话说清「要确认什么、不确认会怎样」——只写「建议先问一下用户」不算数，LLM 解析时扫的是视觉标记。
+
+| 标记 | 触发时机 | 停下来做什么 |
+|---|---|---|
+| 🛑 STOP | 课程输出目录已存在且非空 | 问用户「覆盖 / 换个目录名」，**默认绝不覆盖**；等回答再写文件 |
+| 🛑 STOP | 准备写进 HTML 的代码片段里出现真实密钥、token、账号密码、内网地址 | 停下告知用户，先脱敏或换一段片段；**不得把敏感串原样写进课程** |
+| 🛑 STOP | 代码库看起来是私有 / 未公开项目 | 问一句「这个项目可以做成课程吗」，确认后再继续读代码 |
+| 🔴 CHECKPOINT | 打算做任何降级：减模块、砍强制元素、动画退化成静态图、跳过 `build.sh` | 说明降级内容与影响范围，得到确认再改 |
+| 🔴 CHECKPOINT | Phase 1 结束后仍不清楚项目怎么跑起来 / 入口在哪 | 用一句话问用户，拿到答案再进 Phase 2 |
+| 🔴 CHECKPOINT | Phase 4 收尾（见下方固定三问） | 等用户逐条回答后，再改 `modules/*.html` 并重新 `bash build.sh` |
 
 ---
 
