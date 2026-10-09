@@ -81,6 +81,8 @@ Before writing course HTML, deeply understand the codebase. Read all the key fil
 
 **Figure out what the app does yourself** by reading the README, the main entry points, and the UI code. Don't ask the user to explain the product — they may not be familiar with it either. The course should open by explaining what the app does in plain language (a brief "here's what this thing does and why it's interesting") before diving into how it works. The first module should start with a concrete user action — "imagine you paste a YouTube URL and click Analyze — here's what happens under the hood."
 
+**产出规格：** 分析结论不落盘，直接进入 Phase 2。若判定要走 Parallel 路径，必须把要用到的代码片段**连同文件路径与行号**抄进 `course-name/briefs/`（写作 agent 不会再读代码库）。
+
 ### Phase 2: Curriculum Design
 
 Structure the course as **4-6 modules**. Most courses need 4-6. Only go to 7-8 if the codebase genuinely has that many distinct concepts worth teaching. Fewer, better modules beat more, thinner ones.
@@ -97,7 +99,11 @@ The arc always starts from what the learner already knows (the user-facing behav
 | 6 | When things break | Build debugging intuition so you can escape AI bug loops |
 | 7 | The big picture | See the full architecture so you can make better decisions about what to build next |
 
-This is a **menu, not a checklist**. Pick the modules that serve the codebase — a simple CLI tool needs 4, not 7. Adapt the arc to the codebase's complexity.
+这是**菜单，不是清单**。按代码库规模取用，不要一律按 7 个写：
+
+- **4 个模块**：单入口 CLI、库、脚本、单页小工具
+- **5-6 个模块**：有前端 + 后端的应用，或涉及外部服务 / 数据库
+- **7-8 个模块**：仅当存在 7 个以上彼此独立、各自值得单独讲的机制；否则把相邻模块合并
 
 **The key principle:** Every module should connect back to a practical skill — steering AI, debugging, making decisions. If a module doesn't help the learner DO something better, cut it or reframe it until it does.
 
@@ -165,10 +171,10 @@ course-name/
 - `references/_footer.html` → `course-name/_footer.html`
 - `references/build.sh` → `course-name/build.sh`
 
-**Step 2 (both paths): Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three substitutions:
+**Step 2 (both paths): Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three kinds of substitution:
 - Both instances of `COURSE_TITLE` → the actual course title
 - The four `ACCENT_*` placeholders → the chosen accent color values (pick one palette from the comments in `_base.html`)
-- `NAV_DOTS` → one `<button class="nav-dot" ...>` per module
+- `NAV_DOTS` → one `<button class="nav-dot" ...>` per module（按钮数量必须等于模块数，`data-target` 依次为 `module-1`、`module-2`…，与 `.module` 的 `id` 一一对应）
 
 **Step 3: Write modules** — This is where the paths diverge.
 
@@ -207,7 +213,15 @@ This produces `index.html`. Open it in the browser.
 
 ### Phase 4: Review and Open
 
-After running `build.sh`, open `index.html` in the browser. Walk the user through what was built and ask for feedback on content, design, and interactivity.
+After running `build.sh`, open `index.html` in the browser, then do exactly these two things:
+
+1. 用一句话交代结构：几个模块、每个模块讲什么、`index.html` 在哪个目录。
+2. 依次问下面三个固定问题，并等用户回答：
+   - 哪一屏的讲解你没看懂？（内容）
+   - 配色、字体、间距哪里不舒服？（设计）
+   - 哪个交互元素点了没反应，或者玩法不直观？（交互）
+
+拿到反馈后，改对应的 `modules/*.html` 或 `_base.html`，重新跑 `bash build.sh`。
 
 ---
 
@@ -236,7 +250,7 @@ The visual design should feel like a **beautiful developer notebook** — warm, 
 
 - **Warm palette**: Off-white backgrounds (like aged paper), warm grays, NO cold whites or blues
 - **Bold accent**: One confident accent color (vermillion, coral, teal — NOT purple gradients)
-- **Distinctive typography**: Display font with personality for headings (Bricolage Grotesque, or similar bold geometric face — NEVER Inter, Roboto, Arial, or Space Grotesk). Clean sans-serif for body (DM Sans or similar). JetBrains Mono for code.
+- **Distinctive typography**: 标题字体固定用 `Bricolage Grotesque`、正文 `DM Sans`、代码 `JetBrains Mono` —— 直接照抄 `references/design-system.md` 里的 `--font-display` / `--font-body` / `--font-mono`（已含中文兜底，不要替换、不要精简）。禁止 Inter、Roboto、Arial、Space Grotesk。
 - **Generous whitespace**: Modules breathe. Max 3-4 short paragraphs per screen.
 - **Alternating backgrounds**: Even/odd modules alternate between two warm background tones for visual rhythm
 - **Dark code blocks**: IDE-style with Catppuccin-inspired syntax highlighting on deep indigo-charcoal (#1E1E2E)
